@@ -4,8 +4,8 @@
 // };
 // Must use classList & childNodes
 // But instead we're going to implement it from scratch:
-var getElementsByClassName = function(className) {
-  var body = document.body;
+var getElementsByClassName = function(node, className) {
+  var body = node;
   var result = [];
 // Interate over each node in body
 for ( var i = 0; i < body.childNodes.length; i++) {
@@ -13,9 +13,20 @@ for ( var i = 0; i < body.childNodes.length; i++) {
   // if the node has a class list and that class list contains the class name
   if (currentNode.classList && currentNode.classList.contains(className)) {
     result.push(currentNode);
+    console.log(result)
   }
-}
-// if the node has child nodes
+  // if the node has child nodes
+  if (currentNode.childNodes) {
   //for each child node, concat it to result array
-  result = result.concat(getElementsByClassName(currentNode));
+  var child = currentNode.childNodes;
+  child.forEach(function(child) {
+    if(!result.includes(child)) {
+      result = result.concat(getElementsByClassName(child, className));
+    }
+     // getElementByClassName needs a class name as an imput
+  });
+  }
+};
+  return result;
+
 };
