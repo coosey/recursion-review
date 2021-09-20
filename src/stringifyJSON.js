@@ -13,12 +13,27 @@ var stringifyJSON = function(obj) {
   if (obj === undefined || typeof(obj) === 'function') {
     return '';
   }
-  if (typeof(obj) === 'boolean' || typeof(obj) === 'number' || typeof(obj) === 'string') {
-    return result.concat(obj);
+  if (typeof(obj) === 'boolean' || typeof(obj) === 'number') {
+    return String (obj);
   }
-
-  //if (Array.isArray(obj))
+  if (typeof(obj) === 'string') {
+    return '"' + obj + '"';
+  }
+  if (Array.isArray(obj)) {
+    result += '[';
     // result += stringifJSON(obj[i])
-
-  //if (typeof obj === 'object')
-};
+    for (var i = 0; i < obj.length; i++) {
+      result += stringifyJSON(obj[i]);
+      if (obj.length > 1 && i < obj.length - 1) {
+        result += ',';
+      }
+    }
+    return result += ']';
+  }
+  if (typeof obj === 'object') {
+    for (var key in obj) {
+      
+    }
+  }
+  
+}
